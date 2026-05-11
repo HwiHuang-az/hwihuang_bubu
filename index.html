@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hwi Huáng | Info</title>
+    <link rel="shortcut icon" href="imgs/faicon.png" type="image/x-icon">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         
@@ -199,6 +200,159 @@
             font-size: 1rem;
         }
         
+        /* Game Section */
+        .game-section {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+            overflow-x: auto;
+        }
+        
+        .tab-button {
+            background: transparent;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        .tab-button:hover {
+            color: #667eea;
+        }
+        
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        .tab-icon {
+            font-size: 1.3rem;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .game-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        
+        .game-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #cbd5e1;
+        }
+        
+        .game-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .game-header h4 {
+            font-size: 1.4rem;
+            color: #1e293b;
+            margin-bottom: 3px;
+        }
+        
+        .game-subtitle {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .game-info {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .game-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .game-row:last-child {
+            border-bottom: none;
+        }
+        
+        .game-label {
+            color: #64748b;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        .game-value {
+            color: #1e293b;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .game-button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .game-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
         /* Payment Section */
         .payment-section {
             background: white;
@@ -353,7 +507,7 @@
         <div class="profile-card">
             <div class="profile-content">
                 <div class="avatar-box">
-                    <img src="avatar.jpg" alt="Avatar" class="avatar">
+                    <img src="imgs/avatar.jpg" alt="Avatar" class="avatar">
                     <div class="status-dot"></div>
                 </div>
                 <div class="profile-info">
@@ -397,36 +551,87 @@
             <p>Không chỉ đẹp, còn có ích</p>
         </div>
 
-        <!-- Payment Section -->
-        <div class="payment-section">
+        <!-- Game Section -->
+        <div class="game-section">
             <div class="section-title">
-                <h3>💳 Chuyển khoản</h3>
-                <p>Quét mã hoặc sao chép thông tin</p>
+                <h3>🎮 Game Info</h3>
+                <p>Thông tin tài khoản game của tôi</p>
             </div>
 
-            <div class="payment-grid">
-                <div class="payment-info">
-                    <div class="info-row">
-                        <span class="info-label">Ngân hàng</span>
-                        <span class="info-value">Techcombank</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Chủ tài khoản</span>
-                        <span class="info-value">NGUYEN HOANG THICH</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Số tài khoản</span>
-                        <span class="info-value">3037 3736 840</span>
-                    </div>
-                    <button class="copy-button" onclick="copyAccount()">📋 Sao chép STK</button>
-                </div>
+            <div class="tabs">
+                <button class="tab-button active" onclick="switchTab('lol')">
+                    <span class="tab-icon">⚔️</span>
+                    <span>Liên Minh Huyền Thoại</span>
+                </button>
+                <button class="tab-button" onclick="switchTab('wuwa')">
+                    <span class="tab-icon">🌊</span>
+                    <span>Wuthering Waves</span>
+                </button>
+            </div>
 
-                <div class="qr-box">
-                    <div class="qr-label">Quét nhanh</div>
-                    <div class="qr-image">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Bank:%20Techcombank%0ASTK:%203037373684%0AName:%20NGUYEN%20HOANG%20THICH" alt="QR Code">
+            <div class="tab-content active" id="lol">
+                <div class="game-card">
+                    <div class="game-header">
+                        <div class="game-icon">⚔️</div>
+                        <div>
+                            <h4>Liên Minh Huyền Thoại</h4>
+                            <p class="game-subtitle">League of Legends</p>
+                        </div>
                     </div>
-                    <div class="qr-caption">VietQR Techcombank</div>
+                    <div class="game-info">
+                        <div class="game-row">
+                            <span class="game-label">Tên tài khoản</span>
+                            <span class="game-value">Hwi Huáng#VN1</span>
+                        </div>
+                        <div class="game-row">
+                            <span class="game-label">Rank</span>
+                            <span class="game-value">Diamond II</span>
+                        </div>
+                        <div class="game-row">
+                            <span class="game-label">Main Role</span>
+                            <span class="game-value">Mid Lane</span>
+                        </div>
+                        <div class="game-row">
+                            <span class="game-label">Tướng yêu thích</span>
+                            <span class="game-value">Yasuo, Zed, Akali</span>
+                        </div>
+                    </div>
+                    <button class="game-button" onclick="copyGameInfo('lol')">
+                        📋 Sao chép ID
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="wuwa">
+                <div class="game-card">
+                    <div class="game-header">
+                        <div class="game-icon">🌊</div>
+                        <div>
+                            <h4>Wuthering Waves</h4>
+                            <p class="game-subtitle">Minh Triều Huyền Âm</p>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-row">
+                            <span class="game-label">UID</span>
+                            <span class="game-value">500123456</span>
+                        </div>
+                        <div class="game-row">
+                            <span class="game-label">Server</span>
+                            <span class="game-value">Asia</span>
+                        </div>
+                        <div class="game-row">
+                            <span class="game-label">Level</span>
+                            <span class="game-value">60</span>
+                        </div>
+                        <div class="game-row">
+                            <span class="game-label">Main Character</span>
+                            <span class="game-value">Jiyan, Yinlin</span>
+                        </div>
+                    </div>
+                    <button class="game-button" onclick="copyGameInfo('wuwa')">
+                        📋 Sao chép UID
+                    </button>
                 </div>
             </div>
         </div>
@@ -507,6 +712,42 @@
                 btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                 setTimeout(() => {
                     btn.textContent = '📋 Sao chép STK';
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+        
+        // Chuyển tab game
+        function switchTab(tabName) {
+            // Ẩn tất cả tab content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Bỏ active tất cả tab button
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Hiện tab được chọn
+            document.getElementById(tabName).classList.add('active');
+            event.target.closest('.tab-button').classList.add('active');
+        }
+        
+        // Sao chép thông tin game
+        function copyGameInfo(game) {
+            let text = '';
+            if (game === 'lol') {
+                text = 'Hwi Huáng#VN1';
+            } else if (game === 'wuwa') {
+                text = '500123456';
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Đã sao chép!';
+                btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                setTimeout(() => {
+                    btn.textContent = originalText;
                     btn.style.background = '';
                 }, 2000);
             });
