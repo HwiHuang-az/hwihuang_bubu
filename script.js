@@ -1,7 +1,6 @@
 // Biến toàn cục
 let audio = null;
 let isPlaying = false;
-let visitCount = 0;
 
 // Khởi tạo khi trang load
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initBattery();
     initMusicPlayer();
     initCopyButtons();
+    generateQRCode();
 });
 
 // Đồng hồ thời gian thực
@@ -36,7 +36,7 @@ function initClock() {
         const dateElement = document.getElementById('current-date');
         
         if (timeElement) timeElement.textContent = timeString;
-        if (dateElement) timeElement.textContent = dateString;
+        if (dateElement) dateElement.textContent = dateString;
     }
     
     updateClock();
@@ -59,12 +59,11 @@ function initVisitCounter() {
     // Tăng số lượt truy cập
     count++;
     localStorage.setItem(counterKey, count);
-    visitCount = count;
     
     // Cập nhật hiển thị
     const statusElement = document.getElementById('status');
     if (statusElement) {
-        statusElement.innerHTML = `<span style="color: #27ae60;">● Online</span>`;
+        statusElement.innerHTML = `<span style="color: #10b981;">Online</span>`;
     }
     
     const visitElement = document.getElementById('visit-count');
@@ -100,10 +99,10 @@ function initBattery() {
         });
     } else {
         if (batteryLevel) {
-            batteryLevel.textContent = 'Không hỗ trợ';
+            batteryLevel.textContent = 'N/A';
         }
         if (batteryStatus) {
-            batteryStatus.textContent = 'Trình duyệt không hỗ trợ API Battery';
+            batteryStatus.textContent = 'Không hỗ trợ';
         }
     }
 }
@@ -111,7 +110,6 @@ function initBattery() {
 // Trình phát nhạc
 function initMusicPlayer() {
     const musicBtn = document.getElementById('music-btn');
-    const musicTitle = document.getElementById('music-title');
     
     if (musicBtn) {
         musicBtn.addEventListener('click', toggleMusic);
@@ -121,14 +119,16 @@ function initMusicPlayer() {
 function toggleMusic() {
     const musicBtn = document.getElementById('music-btn');
     const musicTitle = document.getElementById('music-title');
+    const btnText = musicBtn.querySelector('.text');
+    const btnIcon = musicBtn.querySelector('.icon');
     
     if (!audio) {
         // Tạo audio element
         audio = new Audio();
         
-        // Thay đổi URL này thành link nhạc của bạn
-        // Ví dụ: link từ SoundCloud, YouTube (converted), hoặc file local
+        // Link nhạc mẫu - Thay đổi link này thành nhạc của bạn
         audio.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+        audio.loop = true;
         
         audio.addEventListener('loadeddata', function() {
             if (musicTitle) {
@@ -140,30 +140,31 @@ function toggleMusic() {
             if (musicTitle) {
                 musicTitle.textContent = 'Không thể tải nhạc';
             }
-            if (musicBtn) {
-                musicBtn.textContent = '🔇 Lỗi nhạc';
-            }
+            if (btnText) btnText.textContent = 'Lỗi nhạc';
+            if (btnIcon) btnIcon.textContent = '🔇';
         });
     }
     
     if (isPlaying) {
         audio.pause();
         isPlaying = false;
-        if (musicBtn) musicBtn.textContent = '🔇 Bật nhạc';
+        if (btnText) btnText.textContent = 'Bật nhạc';
+        if (btnIcon) btnIcon.textContent = '🎵';
         if (musicTitle) musicTitle.textContent = 'Nhạc đã tắt';
     } else {
         audio.play().then(() => {
             isPlaying = true;
-            if (musicBtn) musicBtn.textContent = '🔊 Tắt nhạc';
+            if (btnText) btnText.textContent = 'Tắt nhạc';
+            if (btnIcon) btnIcon.textContent = '🔊';
             if (musicTitle) musicTitle.textContent = 'Đang phát nhạc...';
         }).catch(error => {
             console.error('Không thể phát nhạc:', error);
-            if (musicTitle) musicTitle.textContent = 'Không thể phát nhạc';
+            if (musicTitle) musicTitle.textContent = 'Không thể phát';
         });
     }
 }
 
-// Sao chép thông tin ngân hàng
+// Sao chép thông tin
 function initCopyButtons() {
     const copyButtons = document.querySelectorAll('.copy-btn');
     
@@ -198,42 +199,47 @@ function fallbackCopy(text, button) {
         showCopyNotification(button);
     } catch (err) {
         console.error('Không thể sao chép:', err);
-        alert('Không thể sao chép tự động. Vui lòng sao chép thủ công: ' + text);
+        alert('Đã sao chép: ' + text);
     }
     
     document.body.removeChild(textArea);
 }
 
 function showCopyNotification(button) {
-    const originalText = button.textContent;
-    button.textContent = '✓ Đã sao chép!';
-    button.style.background = '#27ae60';
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '✓ Đã sao chép!';
+    button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
     
     setTimeout(() => {
-        button.textContent = originalText;
+        button.innerHTML = originalHTML;
         button.style.background = '';
     }, 2000);
 }
 
-// Tạo QR Code (sử dụng API miễn phí)
-function generateQRCode(bankInfo) {
-    const qrContainer = document.querySelector('.qr-code');
+// Tạo QR Code
+function generateQRCode() {
+    const qrContainer = document.getElementById('qr-code');
     if (!qrContainer) return;
     
-    // Sử dụng API QR Code miễn phí
-    const qrData = encodeURIComponent(`Bank: ${bankInfo.bank}\nAccount: ${bankInfo.account}\nName: ${bankInfo.name}`);
+    // Thông tin ngân hàng
+    const bankInfo = {
+        bank: 'Techcombank',
+        account: '3037373684',
+        name: 'NGUYEN HOANG THICH'
+    };
+    
+    // Tạo QR Code sử dụng API miễn phí
+    const qrData = encodeURIComponent(`Bank: ${bankInfo.bank}\nSTK: ${bankInfo.account}\nName: ${bankInfo.name}`);
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrData}`;
     
     const img = document.createElement('img');
     img.src = qrUrl;
     img.alt = 'QR Code';
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'contain';
+    
+    // Xóa loading và thêm ảnh
     qrContainer.innerHTML = '';
     qrContainer.appendChild(img);
 }
-
-// Gọi hàm tạo QR Code với thông tin ngân hàng
-generateQRCode({
-    bank: 'Techcombank',
-    account: '19036521436018',
-    name: 'NGUYEN VAN A'
-});
