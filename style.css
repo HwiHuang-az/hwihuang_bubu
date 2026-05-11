@@ -32,149 +32,44 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    overflow: hidden;
-}
-
-/* Twinkling stars */
-.stars::before,
-.stars::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.stars::before {
     background-image: 
-        radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-        radial-gradient(circle, rgba(0, 212, 255, 0.6) 1px, transparent 1px),
-        radial-gradient(circle, rgba(123, 47, 247, 0.6) 1px, transparent 1px),
-        radial-gradient(circle, rgba(247, 37, 133, 0.6) 1px, transparent 1px);
-    background-size: 200px 200px, 300px 300px, 250px 250px, 350px 350px;
-    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
-    animation: twinkle 3s ease-in-out infinite, moveStars 60s linear infinite;
+        radial-gradient(2px 2px at 20px 30px, rgba(0, 212, 255, 0.4), transparent),
+        radial-gradient(2px 2px at 60px 70px, rgba(123, 47, 247, 0.3), transparent),
+        radial-gradient(1px 1px at 50px 50px, rgba(247, 37, 133, 0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(0, 212, 255, 0.3), transparent),
+        radial-gradient(2px 2px at 90px 10px, rgba(123, 47, 247, 0.2), transparent);
+    background-size: 200px 200px;
+    animation: stars 20s linear infinite;
 }
 
-.stars::after {
-    background-image: 
-        radial-gradient(circle, rgba(255, 255, 255, 0.6) 2px, transparent 2px),
-        radial-gradient(circle, rgba(0, 212, 255, 0.4) 1px, transparent 1px),
-        radial-gradient(circle, rgba(123, 47, 247, 0.4) 1px, transparent 1px);
-    background-size: 400px 400px, 350px 350px, 300px 300px;
-    background-position: 50px 50px, 180px 60px, 300px 200px;
-    animation: twinkle 4s ease-in-out infinite reverse, moveStars 80s linear infinite reverse;
-}
-
-@keyframes twinkle {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-@keyframes moveStars {
-    from { 
-        transform: translateY(0) translateX(0);
-    }
-    to { 
-        transform: translateY(-100px) translateX(-100px);
-    }
-}
-
-/* Shooting Stars */
-.shooting-stars {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.shooting-star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
-    border-radius: 50%;
-    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
-    animation: shootingStar 3s linear infinite;
-    opacity: 0;
-}
-
-.shooting-star::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 80px;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
-    transform: translateX(50%) rotateZ(-45deg);
-}
-
-.shooting-star:nth-child(1) {
-    top: 10%;
-    left: 20%;
-    animation-delay: 0s;
-    animation-duration: 2.5s;
-}
-
-.shooting-star:nth-child(2) {
-    top: 30%;
-    left: 60%;
-    animation-delay: 1.5s;
-    animation-duration: 3s;
-}
-
-.shooting-star:nth-child(3) {
-    top: 50%;
-    left: 10%;
-    animation-delay: 3s;
-    animation-duration: 2.8s;
-}
-
-.shooting-star:nth-child(4) {
-    top: 20%;
-    left: 80%;
-    animation-delay: 4.5s;
-    animation-duration: 2.6s;
-}
-
-.shooting-star:nth-child(5) {
-    top: 70%;
-    left: 40%;
-    animation-delay: 6s;
-    animation-duration: 3.2s;
-}
-
-@keyframes shootingStar {
-    0% {
-        transform: translateX(0) translateY(0) rotate(-45deg);
-        opacity: 1;
-    }
-    70% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(300px) translateY(300px) rotate(-45deg);
-        opacity: 0;
-    }
+@keyframes stars {
+    from { background-position: 0 0; }
+    to { background-position: -200px 200px; }
 }
 
 .container {
-    max-width: 800px;
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container > * {
+    width: 100%;
+    max-width: 600px;
 }
 
 /* Glass Effect */
 .glass {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -185,7 +80,6 @@ body {
     text-align: center;
     margin-bottom: 24px;
     animation: fadeInDown 0.6s ease-out;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 212, 255, 0.1);
 }
 
 @keyframes fadeInDown {
@@ -216,8 +110,8 @@ body {
 }
 
 .music-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+    border: 2px solid rgba(0, 212, 255, 0.3);
     color: white;
     padding: 14px 32px;
     border-radius: 50px;
@@ -228,13 +122,12 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
 }
 
 .music-btn:hover {
-    background: rgba(0, 212, 255, 0.2);
-    border-color: rgba(0, 212, 255, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 12px 32px rgba(0, 212, 255, 0.5);
 }
 
 .music-btn .icon {
@@ -320,7 +213,8 @@ body {
 }
 
 .badge {
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(123, 47, 247, 0.2));
+    border: 1px solid rgba(0, 212, 255, 0.3);
     padding: 8px 16px;
     border-radius: 12px;
     font-size: 0.9rem;
@@ -389,7 +283,8 @@ body {
     border-radius: 20px;
     padding: 24px 32px;
     margin-bottom: 24px;
-    background: rgba(255, 182, 193, 0.2);
+    background: linear-gradient(135deg, rgba(247, 37, 133, 0.15), rgba(123, 47, 247, 0.15));
+    border: 1px solid rgba(247, 37, 133, 0.3);
     display: flex;
     align-items: center;
     gap: 20px;
@@ -474,8 +369,9 @@ body {
 
 .tab.active {
     color: white;
-    background: rgba(255, 255, 255, 0.1);
-    border-bottom-color: white;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(123, 47, 247, 0.2));
+    border-bottom-color: #00d4ff;
+    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
 }
 
 .tab-icon {
@@ -509,7 +405,8 @@ body {
 
 /* Game Info */
 .game-info {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;
     padding: 24px;
 }
@@ -526,12 +423,13 @@ body {
 .game-logo {
     width: 56px;
     height: 56px;
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, #00d4ff, #7b2ff7);
     border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4);
 }
 
 .game-header h4 {
@@ -574,8 +472,8 @@ body {
 
 .copy-btn {
     width: 100%;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+    border: 1px solid rgba(0, 212, 255, 0.3);
     color: white;
     padding: 14px;
     border-radius: 12px;
@@ -587,11 +485,12 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
 }
 
 .copy-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
     transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 212, 255, 0.5);
 }
 
 /* Footer */
