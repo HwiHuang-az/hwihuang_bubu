@@ -444,30 +444,41 @@ body {
 }
 
 .game-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
     margin-bottom: 20px;
 }
 
 .detail-row {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 16px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-direction: column;
+    gap: 8px;
+    transition: all 0.3s ease;
 }
 
-.detail-row:last-child {
-    border-bottom: none;
+.detail-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
 }
 
 .detail-row .label {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
 }
 
 .detail-row .value {
     color: white;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 .copy-btn {
@@ -531,6 +542,10 @@ body {
     .tab {
         white-space: nowrap;
     }
+    
+    .game-details {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 480px) {
@@ -545,5 +560,9 @@ body {
 
     .game-section {
         padding: 24px 20px;
+    }
+    
+    .game-details {
+        grid-template-columns: 1fr;
     }
 }

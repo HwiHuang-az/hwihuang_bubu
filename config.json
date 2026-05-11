@@ -1,0 +1,30 @@
+{
+  "profile": {
+    "name": "Hwi Huáng",
+    "location": "Thành Phố Hà Nội",
+    "avatar": "avatar.jpg"
+  },
+  "games": {
+    "lol": {
+      "enabled": true,
+      "gameName": "Hwi Huáng",
+      "tagLine": "VN1",
+      "rank": "Diamond II",
+      "mainRole": "Mid Lane",
+      "champions": "Yasuo, Zed, Akali",
+      "useAPI": true,
+      "apiKey": "RGAPI-dc3718f9-61c5-4fe1-a28d-265f3afbeeb6"
+    },
+    "wuwa": {
+      "enabled": true,
+      "uid": "500123456",
+      "server": "Asia",
+      "level": "60",
+      "mainCharacter": "Jiyan, Yinlin"
+    }
+  },
+  "music": {
+    "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    "title": "Có chắc yêu là đây"
+  }
+}
