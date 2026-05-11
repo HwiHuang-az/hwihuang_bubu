@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Cá Nhân | Info</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background">
+        <div class="stars"></div>
+        <div class="twinkling"></div>
+    </div>
+
+    <!-- Music Control -->
+    <div class="music-control" id="musicControl">
+        <i class="fas fa-music"></i>
+        <span>Bật nhạc</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1 class="title">HỆ THỐNG THÔNG TIN</h1>
+            <p class="subtitle">Bật nhạc, mở giao diện và vào trang cá nhân.</p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar" id="avatar">
+                    <div class="avatar-ring"></div>
+                </div>
+
+                <div class="profile-info">
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Thành phố Hồ Chí Minh</p>
+                    <h2 class="name">Tên Của Bạn</h2>
+                    
+                    <div class="stats">
+                        <div class="stat-item">
+                            <i class="fas fa-circle status-online"></i>
+                            <span id="status">Đang hoạt động</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-eye"></i>
+                            <span id="visitors">0 lượt ghé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Cards Grid -->
+        <div class="info-grid">
+            <!-- Time Card -->
+            <div class="info-card">
+                <div class="card-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Giờ địa phương</h3>
+                    <p class="time" id="time">00:00:00</p>
+                    <p class="date" id="date">Thứ Hai, 01/01/2024</p>
+                </div>
+            </div>
+
+            <!-- Music Card -->
+            <div class="info-card">
+                <div class="card-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Đang phát</h3>
+                    <p class="music-title" id="musicTitle">Chưa phát nhạc</p>
+                    <p class="music-artist" id="musicArtist">Nhấn nút bật nhạc để nghe</p>
+                </div>
+            </div>
+
+            <!-- Battery Card -->
+            <div class="info-card">
+                <div class="card-icon">
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Pin thiết bị</h3>
+                    <p class="battery-level" id="batteryLevel">Đang đo...</p>
+                    <p class="battery-status" id="batteryStatus">Tự động đọc từ thiết bị</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Highlight Section -->
+        <div class="highlight-section">
+            <h2>Điểm nhấn</h2>
+            <p>Không chỉ đẹp, còn có ích</p>
+        </div>
+
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <h2><i class="fas fa-credit-card"></i> Chuyển khoản</h2>
+            <p class="payment-subtitle">Quét mã hoặc sao chép thông tin</p>
+
+            <div class="payment-content">
+                <div class="qr-container">
+                    <img src="https://img.vietqr.io/image/TCB-19036892004-compact.png" alt="QR Code" class="qr-code">
+                </div>
+
+                <div class="payment-info">
+                    <div class="payment-item">
+                        <span class="payment-label">Ngân hàng</span>
+                        <span class="payment-value">Techcombank</span>
+                    </div>
+                    <div class="payment-item">
+                        <span class="payment-label">Chủ tài khoản</span>
+                        <span class="payment-value">NGUYEN VAN A</span>
+                    </div>
+                    <div class="payment-item">
+                        <span class="payment-label">Số tài khoản</span>
+                        <span class="payment-value" id="accountNumber">1234 5678 900</span>
+                        <button class="copy-btn" onclick="copyAccount()">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="payment-note">
+                        <i class="fas fa-qrcode"></i>
+                        <span>Quét nhanh VietQR Techcombank</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Made with <i class="fas fa-heart"></i> by You</p>
+            <p class="footer-links">
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
