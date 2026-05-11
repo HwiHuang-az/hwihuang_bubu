@@ -112,7 +112,6 @@ function updateLOLUI(data) {
     lolPanel.querySelector('.detail-row:nth-child(1) .value').textContent = data.gameName;
     lolPanel.querySelector('.detail-row:nth-child(2) .value').textContent = data.rank;
     lolPanel.querySelector('.detail-row:nth-child(3) .value').textContent = data.mainRole;
-    lolPanel.querySelector('.detail-row:nth-child(4) .value').textContent = data.champions;
 }
 
 function updateWuWaUI(data) {
@@ -124,10 +123,11 @@ function updateWuWaUI(data) {
 }
 
 // Fetch LOL data from Riot API
-async function fetchLOLData(account, apiKey) {
+async function fetchLOLData(config) {
     try {
-        const gameName = account.gameName;
-        const tagLine = account.tagLine;
+        const gameName = config.gameName;
+        const tagLine = config.tagLine;
+        const apiKey = config.apiKey;
         
         console.log('Fetching LOL data for:', gameName + '#' + tagLine);
         
@@ -139,11 +139,11 @@ async function fetchLOLData(account, apiKey) {
             throw new Error('Account not found');
         }
         
-        const accountData = await accountResponse.json();
-        console.log('Account found:', accountData);
+        const account = await accountResponse.json();
+        console.log('Account found:', account);
         
         // Get summoner by PUUID
-        const summonerUrl = `https://vn2.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${accountData.puuid}?api_key=${apiKey}`;
+        const summonerUrl = `https://vn2.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${account.puuid}?api_key=${apiKey}`;
         const summonerResponse = await fetch(summonerUrl);
         
         if (!summonerResponse.ok) {
@@ -172,8 +172,8 @@ async function fetchLOLData(account, apiKey) {
             rank: soloRank ? `${soloRank.tier} ${soloRank.rank}` : 'Unranked',
             wins: soloRank ? soloRank.wins : 0,
             losses: soloRank ? soloRank.losses : 0,
-            mainRole: account.mainRole,
-            champions: account.champions,
+            mainRole: config.mainRole,
+            champions: config.champions,
             level: summoner.summonerLevel
         };
         
@@ -184,10 +184,10 @@ async function fetchLOLData(account, apiKey) {
         console.error('Failed to fetch LOL data:', error);
         // Fallback to config data
         const fallbackData = {
-            gameName: account.gameName + '#' + account.tagLine,
-            rank: 'Error loading',
-            mainRole: account.mainRole,
-            champions: account.champions
+            gameName: config.gameName + '#' + config.tagLine,
+            rank: config.rank,
+            mainRole: config.mainRole,
+            champions: config.champions
         };
         updateLOLUI(fallbackData);
     }
