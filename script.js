@@ -9,29 +9,26 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Load config
+let globalConfig = null;
+
 async function loadConfig() {
     try {
         const response = await fetch('config.json');
         const config = await response.json();
+        globalConfig = config;
         
         // Update profile
         document.querySelector('.name').textContent = config.profile.name;
         document.querySelector('.location').textContent = '📍 ' + config.profile.location;
         
-        // Update LOL data
-        if (config.games.lol.enabled) {
-            if (config.games.lol.useAPI && config.games.lol.apiKey) {
-                // Fetch from Riot API
-                await fetchLOLData(config.games.lol);
-            } else {
-                // Use config data
-                updateLOLUI(config.games.lol);
-            }
+        // Setup LOL accounts
+        if (config.games.lol.enabled && config.games.lol.accounts) {
+            setupLOLAccounts(config.games.lol);
         }
         
-        // Update WuWa data
-        if (config.games.wuwa.enabled) {
-            updateWuWaUI(config.games.wuwa);
+        // Setup WuWa accounts
+        if (config.games.wuwa.enabled && config.games.wuwa.accounts) {
+            setupWuWaAccounts(config.games.wuwa);
         }
         
         // Update music
@@ -42,6 +39,72 @@ async function loadConfig() {
     } catch (error) {
         console.log('Config not found, using default values');
     }
+}
+
+// Setup LOL accounts dropdown
+function setupLOLAccounts(lolConfig) {
+    const select = document.getElementById('lol-account-select');
+    select.innerHTML = '';
+    
+    lolConfig.accounts.forEach((account, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = account.name;
+        select.appendChild(option);
+    });
+    
+    // Load first account
+    loadLOLAccount(0);
+    
+    // Add change listener
+    select.addEventListener('change', (e) => {
+        loadLOLAccount(parseInt(e.target.value));
+    });
+}
+
+// Load specific LOL account
+async function loadLOLAccount(index) {
+    const lolConfig = globalConfig.games.lol;
+    const account = lolConfig.accounts[index];
+    
+    if (lolConfig.useAPI && lolConfig.apiKey) {
+        await fetchLOLData(account, lolConfig.apiKey);
+    } else {
+        const data = {
+            gameName: account.gameName + '#' + account.tagLine,
+            rank: 'N/A',
+            mainRole: account.mainRole,
+            champions: account.champions
+        };
+        updateLOLUI(data);
+    }
+}
+
+// Setup WuWa accounts dropdown
+function setupWuWaAccounts(wuwaConfig) {
+    const select = document.getElementById('wuwa-account-select');
+    select.innerHTML = '';
+    
+    wuwaConfig.accounts.forEach((account, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = account.name;
+        select.appendChild(option);
+    });
+    
+    // Load first account
+    loadWuWaAccount(0);
+    
+    // Add change listener
+    select.addEventListener('change', (e) => {
+        loadWuWaAccount(parseInt(e.target.value));
+    });
+}
+
+// Load specific WuWa account
+function loadWuWaAccount(index) {
+    const account = globalConfig.games.wuwa.accounts[index];
+    updateWuWaUI(account);
 }
 
 function updateLOLUI(data) {
@@ -61,11 +124,10 @@ function updateWuWaUI(data) {
 }
 
 // Fetch LOL data from Riot API
-async function fetchLOLData(config) {
+async function fetchLOLData(account, apiKey) {
     try {
-        const gameName = config.gameName;
-        const tagLine = config.tagLine;
-        const apiKey = config.apiKey;
+        const gameName = account.gameName;
+        const tagLine = account.tagLine;
         
         console.log('Fetching LOL data for:', gameName + '#' + tagLine);
         
@@ -77,11 +139,11 @@ async function fetchLOLData(config) {
             throw new Error('Account not found');
         }
         
-        const account = await accountResponse.json();
-        console.log('Account found:', account);
+        const accountData = await accountResponse.json();
+        console.log('Account found:', accountData);
         
         // Get summoner by PUUID
-        const summonerUrl = `https://vn2.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${account.puuid}?api_key=${apiKey}`;
+        const summonerUrl = `https://vn2.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${accountData.puuid}?api_key=${apiKey}`;
         const summonerResponse = await fetch(summonerUrl);
         
         if (!summonerResponse.ok) {
@@ -110,8 +172,8 @@ async function fetchLOLData(config) {
             rank: soloRank ? `${soloRank.tier} ${soloRank.rank}` : 'Unranked',
             wins: soloRank ? soloRank.wins : 0,
             losses: soloRank ? soloRank.losses : 0,
-            mainRole: config.mainRole,
-            champions: config.champions,
+            mainRole: account.mainRole,
+            champions: account.champions,
             level: summoner.summonerLevel
         };
         
@@ -122,10 +184,10 @@ async function fetchLOLData(config) {
         console.error('Failed to fetch LOL data:', error);
         // Fallback to config data
         const fallbackData = {
-            gameName: config.gameName + '#' + config.tagLine,
-            rank: config.rank,
-            mainRole: config.mainRole,
-            champions: config.champions
+            gameName: account.gameName + '#' + account.tagLine,
+            rank: 'Error loading',
+            mainRole: account.mainRole,
+            champions: account.champions
         };
         updateLOLUI(fallbackData);
     }

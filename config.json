@@ -7,20 +7,47 @@
   "games": {
     "lol": {
       "enabled": true,
-      "gameName": "Hwi Huáng",
-      "tagLine": "VN1",
-      "rank": "Diamond II",
-      "mainRole": "Mid Lane",
-      "champions": "Yasuo, Zed, Akali",
       "useAPI": true,
-      "apiKey": "RGAPI-dc3718f9-61c5-4fe1-a28d-265f3afbeeb6"
+      "apiKey": "RGAPI-dc3718f9-61c5-4fe1-a28d-265f3afbeeb6",
+      "accounts": [
+        {
+          "id": "main",
+          "name": "Main Account",
+          "gameName": "Hwi Huáng",
+          "tagLine": "VN1",
+          "mainRole": "Mid Lane",
+          "champions": "Yasuo, Zed, Akali"
+        },
+        {
+          "id": "smurf",
+          "name": "Smurf Account",
+          "gameName": "Hwi Huáng",
+          "tagLine": "VN2",
+          "mainRole": "Top Lane",
+          "champions": "Darius, Garen, Sett"
+        }
+      ]
     },
     "wuwa": {
       "enabled": true,
-      "uid": "500123456",
-      "server": "Asia",
-      "level": "60",
-      "mainCharacter": "Jiyan, Yinlin"
+      "accounts": [
+        {
+          "id": "main",
+          "name": "Main Account",
+          "uid": "500123456",
+          "server": "Asia",
+          "level": "60",
+          "mainCharacter": "Jiyan, Yinlin"
+        },
+        {
+          "id": "alt",
+          "name": "Alt Account",
+          "uid": "500789012",
+          "server": "Asia",
+          "level": "45",
+          "mainCharacter": "Calcharo, Verina"
+        }
+      ]
     }
   },
   "music": {

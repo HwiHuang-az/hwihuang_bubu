@@ -95,12 +95,18 @@
                 </button>
                 <button class="tab" data-tab="wuwa">
                     <span class="tab-icon">🌊</span>
-                    <span class="tab-text">WuWa</span>
+                    <span class="tab-text">Wuthering Waves</span>
                 </button>
             </div>
 
             <div class="tab-panels">
                 <div class="tab-panel active" id="lol">
+                    <div class="account-selector">
+                        <label>Chọn tài khoản:</label>
+                        <select id="lol-account-select" class="account-dropdown">
+                            <option value="0">Loading...</option>
+                        </select>
+                    </div>
                     <div class="game-info">
                         <div class="game-header">
                             <div class="game-logo">⚔️</div>
@@ -112,22 +118,22 @@
                         <div class="game-details">
                             <div class="detail-row">
                                 <span class="label">Tên tài khoản</span>
-                                <span class="value">Hwi Huáng#VN1</span>
+                                <span class="value">Loading...</span>
                             </div>
                             <div class="detail-row">
                                 <span class="label">Rank</span>
-                                <span class="value">Diamond II</span>
+                                <span class="value">Loading...</span>
                             </div>
                             <div class="detail-row">
                                 <span class="label">Main Role</span>
-                                <span class="value">Mid Lane</span>
+                                <span class="value">Loading...</span>
                             </div>
                             <div class="detail-row">
                                 <span class="label">Tướng yêu thích</span>
-                                <span class="value">Yasuo, Zed, Akali</span>
+                                <span class="value">Loading...</span>
                             </div>
                         </div>
-                        <button class="copy-btn" onclick="copyText('Hwi Huáng#VN1')">
+                        <button class="copy-btn" onclick="copyText(document.querySelector('#lol .detail-row:nth-child(1) .value').textContent)">
                             <span>📋</span>
                             <span>Sao chép ID</span>
                         </button>
@@ -135,6 +141,12 @@
                 </div>
 
                 <div class="tab-panel" id="wuwa">
+                    <div class="account-selector">
+                        <label>Chọn tài khoản:</label>
+                        <select id="wuwa-account-select" class="account-dropdown">
+                            <option value="0">Loading...</option>
+                        </select>
+                    </div>
                     <div class="game-info">
                         <div class="game-header">
                             <div class="game-logo">🌊</div>
@@ -146,22 +158,22 @@
                         <div class="game-details">
                             <div class="detail-row">
                                 <span class="label">UID</span>
-                                <span class="value">500123456</span>
+                                <span class="value">Loading...</span>
                             </div>
                             <div class="detail-row">
                                 <span class="label">Server</span>
-                                <span class="value">Asia</span>
+                                <span class="value">Loading...</span>
                             </div>
                             <div class="detail-row">
                                 <span class="label">Level</span>
-                                <span class="value">60</span>
+                                <span class="value">Loading...</span>
                             </div>
                             <div class="detail-row">
                                 <span class="label">Main Character</span>
-                                <span class="value">Jiyan, Yinlin</span>
+                                <span class="value">Loading...</span>
                             </div>
                         </div>
-                        <button class="copy-btn" onclick="copyText('500123456')">
+                        <button class="copy-btn" onclick="copyText(document.querySelector('#wuwa .detail-row:nth-child(1) .value').textContent)">
                             <span>📋</span>
                             <span>Sao chép UID</span>
                         </button>
