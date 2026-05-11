@@ -1,245 +1,150 @@
-// Biến toàn cục
-let audio = null;
-let isPlaying = false;
-
-// Khởi tạo khi trang load
+// Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initClock();
     initVisitCounter();
     initBattery();
     initMusicPlayer();
-    initCopyButtons();
-    generateQRCode();
+    initTabs();
 });
 
-// Đồng hồ thời gian thực
+// Clock
 function initClock() {
     function updateClock() {
         const now = new Date();
-        
-        // Định dạng giờ
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        const timeString = `${hours}:${minutes}:${seconds}`;
-        
-        // Định dạng ngày
+        const time = now.toLocaleTimeString('vi-VN', { hour12: false });
         const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
         const dayName = days[now.getDay()];
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const year = now.getFullYear();
-        const dateString = `${dayName}, ${day}/${month}/${year}`;
+        const date = now.toLocaleDateString('vi-VN');
         
-        // Cập nhật DOM
-        const timeElement = document.getElementById('current-time');
-        const dateElement = document.getElementById('current-date');
-        
-        if (timeElement) timeElement.textContent = timeString;
-        if (dateElement) dateElement.textContent = dateString;
+        document.getElementById('time').textContent = time;
+        document.getElementById('date').textContent = `${dayName}, ${date}`;
     }
     
     updateClock();
     setInterval(updateClock, 1000);
 }
 
-// Đếm lượt truy cập
+// Visit Counter
 function initVisitCounter() {
-    const counterKey = 'pageVisitCount';
-    
-    // Lấy số lượt truy cập từ localStorage
-    let count = localStorage.getItem(counterKey);
-    
-    if (count === null) {
-        count = 0;
-    } else {
-        count = parseInt(count);
-    }
-    
-    // Tăng số lượt truy cập
-    count++;
-    localStorage.setItem(counterKey, count);
-    
-    // Cập nhật hiển thị
-    const statusElement = document.getElementById('status');
-    if (statusElement) {
-        statusElement.innerHTML = `<span style="color: #10b981;">Online</span>`;
-    }
-    
-    const visitElement = document.getElementById('visit-count');
-    if (visitElement) {
-        visitElement.textContent = `${count} lượt ghé`;
-    }
+    let visits = localStorage.getItem('visitCount') || 0;
+    visits = parseInt(visits) + 1;
+    localStorage.setItem('visitCount', visits);
+    document.getElementById('visits').textContent = visits;
 }
 
-// Hiển thị pin thiết bị
+// Battery
 function initBattery() {
-    const batteryLevel = document.getElementById('battery-level');
-    const batteryStatus = document.getElementById('battery-status');
-    
     if ('getBattery' in navigator) {
-        navigator.getBattery().then(function(battery) {
+        navigator.getBattery().then(battery => {
             function updateBattery() {
                 const level = Math.round(battery.level * 100);
                 const charging = battery.charging;
                 
-                if (batteryLevel) {
-                    batteryLevel.textContent = `${level}%`;
-                }
-                
-                if (batteryStatus) {
-                    batteryStatus.textContent = charging ? 'Đang sạc' : 'Không sạc';
-                }
+                document.getElementById('battery').textContent = level + '%';
+                document.getElementById('batteryStatus').textContent = charging ? 'Đang sạc' : 'Không sạc';
             }
             
             updateBattery();
-            
             battery.addEventListener('levelchange', updateBattery);
             battery.addEventListener('chargingchange', updateBattery);
         });
     } else {
-        if (batteryLevel) {
-            batteryLevel.textContent = 'N/A';
-        }
-        if (batteryStatus) {
-            batteryStatus.textContent = 'Không hỗ trợ';
-        }
+        document.getElementById('battery').textContent = 'N/A';
+        document.getElementById('batteryStatus').textContent = 'Không hỗ trợ';
     }
 }
 
-// Trình phát nhạc
+// Music Player
+let audio = null;
+let isPlaying = false;
+
 function initMusicPlayer() {
-    const musicBtn = document.getElementById('music-btn');
+    const musicBtn = document.getElementById('musicBtn');
     
-    if (musicBtn) {
-        musicBtn.addEventListener('click', toggleMusic);
-    }
+    musicBtn.addEventListener('click', function() {
+        if (!audio) {
+            audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+            audio.loop = true;
+        }
+        
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            musicBtn.querySelector('.text').textContent = 'Bật nhạc';
+            musicBtn.querySelector('.icon').textContent = '🎵';
+            document.getElementById('musicTitle').textContent = 'Nhạc đã tắt';
+        } else {
+            audio.play().then(() => {
+                isPlaying = true;
+                musicBtn.querySelector('.text').textContent = 'Tắt nhạc';
+                musicBtn.querySelector('.icon').textContent = '🔊';
+                document.getElementById('musicTitle').textContent = 'Đang phát nhạc...';
+            }).catch(err => {
+                console.error('Cannot play audio:', err);
+            });
+        }
+    });
 }
 
-function toggleMusic() {
-    const musicBtn = document.getElementById('music-btn');
-    const musicTitle = document.getElementById('music-title');
-    const btnText = musicBtn.querySelector('.text');
-    const btnIcon = musicBtn.querySelector('.icon');
+// Tabs
+function initTabs() {
+    const tabs = document.querySelectorAll('.tab');
     
-    if (!audio) {
-        // Tạo audio element
-        audio = new Audio();
-        
-        // Link nhạc mẫu - Thay đổi link này thành nhạc của bạn
-        audio.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-        audio.loop = true;
-        
-        audio.addEventListener('loadeddata', function() {
-            if (musicTitle) {
-                musicTitle.textContent = 'Đang phát nhạc...';
-            }
-        });
-        
-        audio.addEventListener('error', function() {
-            if (musicTitle) {
-                musicTitle.textContent = 'Không thể tải nhạc';
-            }
-            if (btnText) btnText.textContent = 'Lỗi nhạc';
-            if (btnIcon) btnIcon.textContent = '🔇';
-        });
-    }
-    
-    if (isPlaying) {
-        audio.pause();
-        isPlaying = false;
-        if (btnText) btnText.textContent = 'Bật nhạc';
-        if (btnIcon) btnIcon.textContent = '🎵';
-        if (musicTitle) musicTitle.textContent = 'Nhạc đã tắt';
-    } else {
-        audio.play().then(() => {
-            isPlaying = true;
-            if (btnText) btnText.textContent = 'Tắt nhạc';
-            if (btnIcon) btnIcon.textContent = '🔊';
-            if (musicTitle) musicTitle.textContent = 'Đang phát nhạc...';
-        }).catch(error => {
-            console.error('Không thể phát nhạc:', error);
-            if (musicTitle) musicTitle.textContent = 'Không thể phát';
-        });
-    }
-}
-
-// Sao chép thông tin
-function initCopyButtons() {
-    const copyButtons = document.querySelectorAll('.copy-btn');
-    
-    copyButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const textToCopy = this.getAttribute('data-copy');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
             
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    showCopyNotification(this);
-                }).catch(err => {
-                    console.error('Không thể sao chép:', err);
-                    fallbackCopy(textToCopy, this);
-                });
-            } else {
-                fallbackCopy(textToCopy, this);
-            }
+            // Remove active class from all tabs and panels
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding panel
+            this.classList.add('active');
+            document.getElementById(targetTab).classList.add('active');
         });
     });
 }
 
-function fallbackCopy(text, button) {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-999999px';
-    document.body.appendChild(textArea);
-    textArea.select();
+// Copy Text
+function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+            showCopySuccess(event.target);
+        }).catch(err => {
+            console.error('Copy failed:', err);
+            fallbackCopy(text);
+        });
+    } else {
+        fallbackCopy(text);
+    }
+}
+
+function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
     
     try {
         document.execCommand('copy');
-        showCopyNotification(button);
+        showCopySuccess(event.target);
     } catch (err) {
-        console.error('Không thể sao chép:', err);
+        console.error('Fallback copy failed:', err);
         alert('Đã sao chép: ' + text);
     }
     
-    document.body.removeChild(textArea);
+    document.body.removeChild(textarea);
 }
 
-function showCopyNotification(button) {
+function showCopySuccess(button) {
     const originalHTML = button.innerHTML;
-    button.innerHTML = '✓ Đã sao chép!';
-    button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    button.innerHTML = '<span>✓</span><span>Đã sao chép!</span>';
+    button.style.background = 'rgba(16, 185, 129, 0.3)';
     
     setTimeout(() => {
         button.innerHTML = originalHTML;
         button.style.background = '';
     }, 2000);
-}
-
-// Tạo QR Code
-function generateQRCode() {
-    const qrContainer = document.getElementById('qr-code');
-    if (!qrContainer) return;
-    
-    // Thông tin ngân hàng
-    const bankInfo = {
-        bank: 'Techcombank',
-        account: '3037373684',
-        name: 'NGUYEN HOANG THICH'
-    };
-    
-    // Tạo QR Code sử dụng API miễn phí
-    const qrData = encodeURIComponent(`Bank: ${bankInfo.bank}\nSTK: ${bankInfo.account}\nName: ${bankInfo.name}`);
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrData}`;
-    
-    const img = document.createElement('img');
-    img.src = qrUrl;
-    img.alt = 'QR Code';
-    img.style.width = '100%';
-    img.style.height = '100%';
-    img.style.objectFit = 'contain';
-    
-    // Xóa loading và thêm ảnh
-    qrContainer.innerHTML = '';
-    qrContainer.appendChild(img);
 }

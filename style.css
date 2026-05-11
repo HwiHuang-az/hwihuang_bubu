@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 * {
     margin: 0;
@@ -7,60 +7,70 @@
 }
 
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary: #8b5cf6;
-    --accent: #ec4899;
-    --success: #10b981;
-    --warning: #f59e0b;
-    --danger: #ef4444;
-    --dark: #1e293b;
-    --light: #f8fafc;
-    --gray: #64748b;
-    --border: #e2e8f0;
+    --primary: #667eea;
+    --secondary: #764ba2;
+    --accent: #f093fb;
+    --text-dark: #1a1a2e;
+    --text-light: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.18);
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
 }
 
-/* Background Animation */
-.background-animation {
+/* Animated Stars Background */
+.stars {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(138, 92, 246, 0.3), transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.2), transparent 50%);
-    animation: backgroundMove 20s ease-in-out infinite;
-    z-index: 0;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 60px 70px, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 50px 50px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 90px 10px, rgba(255,255,255,0.2), transparent);
+    background-size: 200px 200px;
+    animation: stars 20s linear infinite;
 }
 
-@keyframes backgroundMove {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.1) rotate(5deg); }
+@keyframes stars {
+    from { background-position: 0 0; }
+    to { background-position: -200px 200px; }
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 40px 20px;
     position: relative;
     z-index: 1;
 }
 
-/* Header */
-.main-header {
+/* Glass Effect */
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Header Card */
+.header-card {
+    border-radius: 24px;
+    padding: 50px 40px;
     text-align: center;
-    margin-bottom: 40px;
-    animation: fadeInDown 0.8s ease-out;
+    margin-bottom: 24px;
+    animation: fadeInDown 0.6s ease-out;
 }
 
 @keyframes fadeInDown {
@@ -74,24 +84,24 @@ body {
     }
 }
 
-.header-content h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
+.title {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: 800;
     color: white;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    margin-bottom: 10px;
-    letter-spacing: 2px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
 }
 
 .subtitle {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-    margin-bottom: 25px;
+    font-size: 1.05rem;
+    margin-bottom: 28px;
+    font-weight: 400;
 }
 
-.music-toggle {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
+.music-btn {
+    background: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.3);
     color: white;
     padding: 14px 32px;
@@ -105,25 +115,22 @@ body {
     gap: 10px;
 }
 
-.music-toggle:hover {
-    background: rgba(255, 255, 255, 0.25);
+.music-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-.music-toggle .icon {
+.music-btn .icon {
     font-size: 1.2rem;
 }
 
 /* Profile Card */
 .profile-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
     border-radius: 24px;
-    padding: 40px;
-    margin-bottom: 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-    animation: fadeInUp 0.8s ease-out 0.2s both;
+    padding: 32px;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.6s ease-out 0.1s both;
 }
 
 @keyframes fadeInUp {
@@ -137,11 +144,10 @@ body {
     }
 }
 
-.profile-header {
+.profile-content {
     display: flex;
     align-items: center;
-    gap: 30px;
-    flex-wrap: wrap;
+    gap: 24px;
 }
 
 .avatar-wrapper {
@@ -149,230 +155,313 @@ body {
 }
 
 .avatar {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    border: 4px solid var(--primary);
+    border: 3px solid rgba(255, 255, 255, 0.5);
     object-fit: cover;
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-    animation: float 3s ease-in-out infinite;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.status-indicator {
+.status-dot {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
-    width: 20px;
-    height: 20px;
-    background: var(--success);
-    border: 3px solid white;
+    bottom: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: #10b981;
+    border: 3px solid rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
-.profile-details {
+.profile-info {
     flex: 1;
-    min-width: 250px;
 }
 
 .location {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--gray);
-    font-size: 0.95rem;
-    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-bottom: 6px;
 }
 
-.profile-name {
+.name {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 15px;
+    color: white;
+    margin-bottom: 14px;
 }
 
-.profile-stats {
+.badges {
     display: flex;
-    gap: 20px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
-.stat {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    padding: 10px 20px;
+.badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
     border-radius: 12px;
     font-size: 0.9rem;
+    color: white;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.stat-icon {
-    font-size: 1.1rem;
-}
-
-/* Info Grid */
-.info-grid {
+/* Info Cards Grid */
+.cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
 }
 
 .info-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
     border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.8s ease-out 0.4s both;
+    padding: 28px 24px;
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+    transition: transform 0.3s ease;
 }
 
 .info-card:nth-child(2) {
-    animation-delay: 0.5s;
+    animation-delay: 0.3s;
 }
 
 .info-card:nth-child(3) {
-    animation-delay: 0.6s;
+    animation-delay: 0.4s;
 }
 
 .info-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
 }
 
 .card-icon {
     font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.info-card h3 {
-    color: var(--gray);
-    font-size: 0.95rem;
-    font-weight: 600;
     margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
-.card-main {
-    font-size: 1.8rem;
+.card-title {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
     font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 8px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
 }
 
-.card-sub {
-    color: var(--gray);
-    font-size: 0.9rem;
+.card-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
 }
 
-/* Highlight Banner */
-.highlight-banner {
-    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+.card-desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+}
+
+/* Highlight Card */
+.highlight-card {
     border-radius: 20px;
-    padding: 30px;
-    text-align: center;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 40px rgba(252, 182, 159, 0.3);
-    animation: fadeInUp 0.8s ease-out 0.7s both;
+    padding: 24px 32px;
+    margin-bottom: 24px;
+    background: rgba(255, 182, 193, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: fadeInUp 0.6s ease-out 0.5s both;
 }
 
-.highlight-banner h3 {
-    font-size: 1.5rem;
-    color: #d63031;
-    margin-bottom: 8px;
+.highlight-icon {
+    font-size: 2.5rem;
 }
 
-.highlight-banner p {
-    color: #e17055;
-    font-size: 1.05rem;
+.highlight-text h3 {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
 }
 
-/* Payment Section */
-.payment-section {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
+.highlight-text p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+/* Game Section */
+.game-section {
     border-radius: 24px;
-    padding: 40px;
-    margin-bottom: 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-    animation: fadeInUp 0.8s ease-out 0.8s both;
+    padding: 32px;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.6s ease-out 0.6s both;
 }
 
 .section-header {
-    text-align: center;
-    margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
 }
 
-.section-header h3 {
-    font-size: 1.8rem;
-    color: var(--dark);
-    margin-bottom: 8px;
+.section-icon {
+    font-size: 2.2rem;
 }
 
-.section-header p {
-    color: var(--gray);
-    font-size: 1rem;
+.section-info h3 {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 4px;
 }
 
-.payment-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    align-items: start;
+.section-info p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
 }
 
-.payment-info {
-    background: var(--light);
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 4px;
+}
+
+.tab {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 12px 20px;
+    border-radius: 12px 12px 0 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 3px solid transparent;
+}
+
+.tab:hover {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tab.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom-color: white;
+}
+
+.tab-icon {
+    font-size: 1.2rem;
+}
+
+/* Tab Panels */
+.tab-panels {
+    position: relative;
+}
+
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.4s ease-in;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Game Info */
+.game-info {
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 16px;
-    padding: 25px;
+    padding: 24px;
 }
 
-.info-row {
+.game-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.game-logo {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.game-header h4 {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.game-header p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
+.game-details {
+    margin-bottom: 20px;
+}
+
+.detail-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.info-row:last-child {
+.detail-row:last-child {
     border-bottom: none;
 }
 
-.label {
-    color: var(--gray);
+.detail-row .label {
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
-    font-weight: 500;
 }
 
-.value {
-    color: var(--dark);
+.detail-row .value {
+    color: white;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 .copy-btn {
     width: 100%;
-    margin-top: 20px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
-    border: none;
-    padding: 14px 24px;
+    padding: 14px;
     border-radius: 12px;
     font-size: 1rem;
     font-weight: 600;
@@ -381,121 +470,65 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-}
-
-.qr-wrapper {
-    text-align: center;
-    background: var(--light);
-    border-radius: 16px;
-    padding: 25px;
-}
-
-.qr-label {
-    color: var(--gray);
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.qr-code {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 15px;
-    background: white;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-}
-
-.qr-code img {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 12px;
-}
-
-.qr-loading {
-    width: 40px;
-    height: 40px;
-    border: 4px solid var(--border);
-    border-top-color: var(--primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-.qr-caption {
-    color: var(--gray);
-    font-size: 0.9rem;
 }
 
 /* Footer */
 .footer {
     text-align: center;
     padding: 30px 0;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.95rem;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .container {
-        padding: 20px 15px;
+        padding: 24px 16px;
     }
 
-    .profile-card {
-        padding: 25px;
+    .header-card {
+        padding: 36px 24px;
     }
 
-    .profile-header {
+    .profile-content {
         flex-direction: column;
         text-align: center;
     }
 
-    .profile-name {
+    .name {
         font-size: 1.6rem;
     }
 
-    .info-grid {
+    .cards-grid {
         grid-template-columns: 1fr;
     }
 
-    .payment-container {
-        grid-template-columns: 1fr;
+    .tabs {
+        overflow-x: auto;
     }
 
-    .payment-section {
-        padding: 25px;
+    .tab {
+        white-space: nowrap;
     }
 }
 
 @media (max-width: 480px) {
-    .header-content h1 {
-        font-size: 1.8rem;
-    }
-
-    .subtitle {
-        font-size: 0.95rem;
+    .title {
+        font-size: 1.6rem;
     }
 
     .avatar {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
     }
 
-    .card-main {
-        font-size: 1.5rem;
+    .game-section {
+        padding: 24px 20px;
     }
 }
